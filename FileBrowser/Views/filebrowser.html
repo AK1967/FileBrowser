@@ -1,0 +1,89 @@
+﻿<div class="container" ng-controller="FileBrowserController" ng-model="collectionFiles">
+    <br />
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th colspan="3">
+                    <div id="dirName" class="text-info text-center"></div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div style="text-align: right">
+                        <label class="form-inline">
+                            From (MB): <input id="filterOneFrom" class="form-control" type="text" name="input" ng-model="filterOneFrom" value="{{filterOneFrom * 1048576}}" required>
+                        </label>
+                    </div>
+                    <div style="text-align: right">
+                        <label class="form-inline">
+                            To (MB): <input id="filterOneTo" class="form-control" type="text" name="input" ng-model="filterOneTo" value="{{filterOneTo * 1048576}}" required>
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: right">
+                        <label class="form-inline">
+                            From (MB): <input id="filterTwoFrom" class="form-control" type="text" name="input" ng-model="filterTwoFrom" value="{{filterTwoFrom * 1048576}}" required>
+                        </label>
+                    </div>
+                    <div style="text-align: right">
+                        <label class="form-inline">
+                            To (MB): <input id="filterTwoTo" class="form-control" type="text" name="input" ng-model="filterTwoTo" value="{{filterTwoTo * 1048576}}" required>
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: right">
+                        <label class="form-inline">
+                            From (MB): <input id="filterThreeFrom" class="form-control" type="text" name="input" ng-model="filterThreeFrom" value="{{filterThreeFrom * 1048576}}" required>
+                        </label>
+                    </div>
+                    <div style="text-align: right">
+                        <label class="form-inline">
+                            To (MB): <input id="filterThreeTo" class="form-control" type="text" name="input" ng-model="filterThreeTo" value="{{filterThreeTo * 1048576}}" required>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="text-info text-center">Count:</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="countOne" class="text-info text-center">
+                    </div>
+                </td>
+                <td>
+                    <div id="countTwo" class="text-info text-center"></div>
+                </td>
+                <td>
+                    <div id="countThree" class="text-info text-center"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <div class="text-center" ng-if="loading">
+        <img src="../Images/giphy.gif" />
+    </div>
+    <br />
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <div>
+                        <div>
+                            <collection collection='collectionFiles'></collection>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <modal></modal>
+</div>
