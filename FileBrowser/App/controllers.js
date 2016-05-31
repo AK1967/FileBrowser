@@ -177,7 +177,7 @@ angular.module('FileBrowserApp.controllers', [])
             });
 
             scope.CloseView = function () {
-                $('#viewFile .modal-body').html('<h4></h4>');
+                $('#viewFile .modal-body').html('<h4 class="text-warning text-center"></h4>');
                 $("#btnView").show();
             }
         }
