@@ -28,7 +28,9 @@ angular.module('FileBrowserApp.controllers', [])
                 $('#viewFile .modal-body').html('<div class="text-center" ng-if="loading"><img src="../Images/giphy.gif"/></div>');
                 fileBrowserService.viewFile().query({ name: name }).$promise.then(
                     function (response) {
-                        $('#viewFile .modal-body').html('<textarea class="form-control" style="resize:vertical; min-width: 100%" rows="20">' + response.data + '</textarea>');
+                        var textFromFile = response.data.substring(1, response.data.length - 1);
+
+                        $('#viewFile .modal-body').html('<textarea class="form-control" style="resize:vertical; min-width: 100%" rows="20">' + textFromFile + '</textarea>');
                         $("#btnView").hide();
                     },
                     function (response) {
