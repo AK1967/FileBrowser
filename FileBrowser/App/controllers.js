@@ -40,18 +40,17 @@ angular.module('FileBrowserApp.controllers', [])
             };
         }
     ])
+    .directive('collection', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+                collection: '='
+            },
 
-   .directive('collection', function () {
-       return {
-           restrict: 'E',
-           replace: true,
-           scope: {
-               collection: '='
-           },
-
-           template: '<ul><member ng-repeat="member in collection" member="member"></member></ul>'
-       };
-   })
+            template: '<ul><member ng-repeat="member in collection" member="member"></member></ul>'
+        };
+    })
     .directive('member', function ($compile) {
         return {
             restrict: 'E',
@@ -71,8 +70,7 @@ angular.module('FileBrowserApp.controllers', [])
                     scope.member.NodeId = "Dir_" + node.replace(/\\/g, "-slash-").replace(/\[/g, "\\[").replace(/\]/g, "\\]").replace(/\./g, "\\.").replace(/:/g, "");
                     element.append('<collection collection="member.ChildrenNode" ng-show="treeNode"></collection>');
                     $compile(element.contents())(scope);
-                }
-                else {
+                } else {
                     scope.member.NodeId = "File_" + node.replace(/\\/g, "-slash-").replace(/\[/g, "\\[").replace(/\]/g, "\\]").replace(/\./g, "\\.").replace(/:/g, "");
                 };
 
@@ -94,11 +92,9 @@ angular.module('FileBrowserApp.controllers', [])
 
                             if (sizeFile >= parseFloat($("#filterOneFrom").attr("value")) && sizeFile <= parseFloat($("#filterOneTo").attr("value"))) {
                                 scope.countOne = parseInt(scope.countOne) + 1;
-                            }
-                            else if (sizeFile > parseFloat($("#filterTwoFrom").attr("value")) && sizeFile <= parseFloat($("#filterTwoTo").attr("value"))) {
+                            } else if (sizeFile > parseFloat($("#filterTwoFrom").attr("value")) && sizeFile <= parseFloat($("#filterTwoTo").attr("value"))) {
                                 scope.countTwo = parseInt(scope.countTwo) + 1;
-                            }
-                            else if (sizeFile > parseFloat($("#filterThreeFrom").attr("value")) && sizeFile <= parseFloat($("#filterThreeTo").attr("value"))) {
+                            } else if (sizeFile > parseFloat($("#filterThreeFrom").attr("value")) && sizeFile <= parseFloat($("#filterThreeTo").attr("value"))) {
                                 scope.countThree = parseInt(scope.countThree) + 1;
                             };
 
@@ -132,59 +128,83 @@ angular.module('FileBrowserApp.controllers', [])
             }
         };
     })
-.directive('modal', function () {
-    return {
-        template: '<div id="viewFile" class="modal fade" visible="false">' +
-            '<div class="modal-dialog">' +
-              '<div class="modal-content">' +
+    .directive('modal', function () {
+        return {
+            template: '<div id="viewFile" class="modal fade" visible="false">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
                 '<div class="modal-header">' +
-                  '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="CloseView()">&times;</button>' +
-                  '<h4 class="modal-title"></h4>' +
+                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="CloseView()">&times;</button>' +
+                '<h4 class="modal-title"></h4>' +
                 '</div>' +
                 '<div class="modal-body">' +
-                 '<h4 class="text-warning text-center"></h4>' +
+                '<h4 class="text-warning text-center"></h4>' +
                 '</div>' +
                 '<div class="modal-footer">' +
-                 '<div class="input-group input-group-btn">' +
-                   '<button id="btnView" type="button" class="btn btn-success" ng-click="ViewFile()" >View</button>' +
-                   '<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CloseView()">Close</button>' +
-                  '</div>' +
+                '<div class="input-group input-group-btn">' +
+                '<button id="btnView" type="button" class="btn btn-success" ng-click="ViewFile()" >View</button>' +
+                '<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CloseView()">Close</button>' +
                 '</div>' +
-            '</div>' +
-          '</div>',
-        restrict: 'E',
-        transclude: true,
-        replace: true,
-        scope: true,
-        link: function postLink(scope, element, attrs) {
-            scope.title = attrs.title;
+                '</div>' +
+                '</div>' +
+                '</div>',
+            restrict: 'E',
+            transclude: true,
+            replace: true,
+            scope: true,
+            link: function postLink(scope, element, attrs) {
+                scope.title = attrs.title;
 
-            scope.$watch(attrs.visible, function (value) {
-                if (value === true)
-                    $(element).modal('show');
-                else
-                    $(element).modal('hide');
-            });
-
-            $(element).on('shown.bs.modal', function () {
-                scope.$apply(function () {
-                    scope.$parent[attrs.visible] = true;
+                scope.$watch(attrs.visible, function (value) {
+                    if (value === true)
+                        $(element).modal('show');
+                    else
+                        $(element).modal('hide');
                 });
-            });
 
-            $(element).on('hidden.bs.modal', function () {
-                scope.$apply(function () {
-                    scope.$parent[attrs.visible] = false;
+                $(element).on('shown.bs.modal', function () {
+                    scope.$apply(function () {
+                        scope.$parent[attrs.visible] = true;
+                    });
                 });
-            });
 
-            scope.CloseView = function () {
-                $('#viewFile .modal-body').html('<h4 class="text-warning text-center"></h4>');
-                $("#btnView").show();
+                $(element).on('hidden.bs.modal', function () {
+                    scope.$apply(function () {
+                        scope.$parent[attrs.visible] = false;
+                    });
+                });
+
+                scope.CloseView = function () {
+                    $('#viewFile .modal-body').html('<h4 class="text-warning text-center"></h4>');
+                    $("#btnView").show();
+                }
             }
-        }
-    };
-});
+        };
+    })
+    .directive("scroll", function ($window) {
+        return {
+            template: '<a href="" class="scroll"></a>',
+            restrict: 'E',
+            transclude: true,
+            replace: true,
+            scope: true,
+            link: function (scope, element) {
+                angular.element($window).bind("scroll", function () {
+                    if ($("body").scrollTop() === 0) {
+                        $(element).fadeOut();
+                    } else {
+                        $(element).fadeIn();
+                    }
+                    scope.$apply();
+                });
+                $(element).on('click',
+                    function () {
+                        $("html, body").animate({ scrollTop: 0 }, "slow");
+                        $(element).fadeOut();
+                    });
+            }
+        };
+    });
 
 
 
