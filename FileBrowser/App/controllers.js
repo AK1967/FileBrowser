@@ -191,7 +191,7 @@ angular.module('FileBrowserApp.controllers', [])
             link: function (scope, element) {
                 angular.element($window).bind("scroll", function () {
                     if ($("body").scrollTop() === 0) {
-                        $(element).fadeOut();
+                        $(element).fadeOut(0);
                     } else {
                         $(element).fadeIn();
                     }
@@ -200,7 +200,6 @@ angular.module('FileBrowserApp.controllers', [])
                 $(element).on('click',
                     function () {
                         $("html, body").animate({ scrollTop: 0 }, "slow");
-                        $(element).fadeOut();
                     });
             }
         };
