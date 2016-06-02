@@ -24,7 +24,7 @@ namespace FileBrowser.Controllers
 
             var fileBrowser = GetFiles(dir);
 
-            var strFileBrowser = "[" + new JavaScriptSerializer().Serialize(fileBrowser) + "]";
+            var strFileBrowser = "[" + new JavaScriptSerializer() { MaxJsonLength = int.MaxValue }.Serialize(fileBrowser) + "]";
 
             return strFileBrowser;
         }
