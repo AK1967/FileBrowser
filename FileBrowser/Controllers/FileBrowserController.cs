@@ -6,7 +6,6 @@ using System.Text;
 using System.Web.Http;
 using System.Web.Hosting;
 using FileBrowser.Models;
-using System.Web.Script.Serialization;
 
 namespace FileBrowser.Controllers
 {
@@ -24,7 +23,7 @@ namespace FileBrowser.Controllers
 
             var fileBrowser = GetFiles(dir);
 
-            var strFileBrowser = "[" + new JavaScriptSerializer() { MaxJsonLength = int.MaxValue }.Serialize(fileBrowser) + "]";
+            var strFileBrowser = "[" + Newtonsoft.Json.JsonConvert.SerializeObject(fileBrowser, Newtonsoft.Json.Formatting.Indented) + "]";
 
             return strFileBrowser;
         }
