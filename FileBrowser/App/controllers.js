@@ -29,6 +29,7 @@ angular.module('FileBrowserApp.controllers', [])
                 fileBrowserService.viewFile().query({ name: name }).$promise.then(
                     function (response) {
                         var textFromFile = response.data.substring(1, response.data.length - 1);
+                        textFromFile = textFromFile.replace(/\\n/g, '\n').replace(/\\r/g, '\r');
 
                         $('#viewFile .modal-body').html('<textarea class="form-control" style="resize:vertical; min-width: 100%" rows="20">' + textFromFile + '</textarea>');
                         $("#btnView").hide();
